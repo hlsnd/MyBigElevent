@@ -127,7 +127,7 @@
         });
 
         $('#model_shutoff').click(function () {
-            alert('shutoff');
+            // alert('shutoff');
             $('#addModal').modal('hide');
         });
 
@@ -168,25 +168,23 @@
             3. 响应回来之后
 
         */
-
         $(function () {
-            function getCate() {
+            //获取分类
+            function getCode() {
                 $.ajax({
                     url: 'https://autumnfish.cn/big32/admin/category_search',
                     type: 'get',
                     success: function (backData) {
                         // console.log(backData);
-                        //调用方法
                         var html = template('tem', backData)
                         $('tbody').html(html)
                     }
                 })
             }
-            //默认调用一次
-            getCate()
+            getCode()
+            //给新增分类按钮添加点击事件
             $('#model_add').click(function () {
-
-                //获取分类名称跟别名
+                //获取name和slug
                 var name = $('.modalName').val()
                 var slug = $('.modalSlug').val()
                 $.ajax({
@@ -194,13 +192,14 @@
                     type: 'post',
                     data: {
                         name: name,
-                        slug: slug
+                        slug: slug,
                     },
                     success: function (backData) {
                         // console.log(backData);
+                        //调用方法
                         $('#addModal').modal('hide');
-                        if(backData==200){
-                            getCate()
+                        if (backData.code == 200) {
+                            getCode()
                         }
                     }
                 })

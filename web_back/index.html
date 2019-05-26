@@ -21,7 +21,7 @@
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
             <img src="images/2.jpg" alt="person">
-            <span>欢迎&nbsp;&nbsp;李思思</span>
+            <span>欢迎&nbsp;&nbsp;<i>李思思</i></span>
             <b>管理员</b>
         </div>
         <div class="menu">
@@ -130,9 +130,11 @@
 </html>
 <script>
 $(function(){
+    //退出按钮的弹窗事件
     $('.icon-tuichu').parent().click(function(){
         $('#myModal').modal()
     })
+    //点击确定
     $('.btn-leave').click(function(){
         $.ajax({
             url:'https://autumnfish.cn/big/admin/logout',
@@ -146,6 +148,18 @@ $(function(){
             }
         })
     })
+    //获取用户信息
+    $.ajax({
+        url:'https://autumnfish.cn/big32/admin/getuser',
+        type:'get',
+        success:function(backData){
+            console.log(backData);
+            //左边
+            $('.user_info i').text(backData.data.nickname)
+            $('.user_info img').attr('src',backData.data.user_pic)
+            //右边
+            $('.user_center_link img').attr('src',backData.data.user_pic)
+        }
+    })
 })
-
 </script>
